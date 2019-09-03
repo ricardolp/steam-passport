@@ -15,6 +15,7 @@ var express = require('express')
 //   have a database of user records, the complete Steam profile is serialized
 //   and deserialized.
 passport.serializeUser(function(user, done) {
+  console.log(user)
   done(null, user);
 });
 
@@ -29,12 +30,12 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new SteamStrategy({
     returnURL: 'http://localhost:3000/auth/steam/return',
     realm: 'http://localhost:3000/',
-    apiKey: 'Your API key here'
+    apiKey: 'BD64E2E793DEFFA2F7EE2F5AF023BF53'
   },
   function(identifier, profile, done) {
     // asynchronous verification, for effect...
     process.nextTick(function () {
-
+      console.log(profile)
       // To keep the example simple, the user's Steam profile is returned to
       // represent the logged-in user.  In a typical application, you would want
       // to associate the Steam account with a user record in your database,
@@ -68,6 +69,7 @@ app.get('/', function(req, res){
 });
 
 app.get('/account', ensureAuthenticated, function(req, res){
+  console.log(req.user)
   res.render('account', { user: req.user });
 });
 
